@@ -1,13 +1,15 @@
-ARG ALPINE_VERSION=3.11
-ARG CADDDY_VERSION=2.0.0
+ARG ALPINE_VERSION=3.17
+ARG CADDDY_VERSION=2.6.4
 
-FROM caddy:${CADDDY_VERSION}-alpine as caddy
+FROM caddy:${CADDDY_VERSION}-builder-alpine as caddy
+
+RUN xcaddy build --with github.com/caddy-dns/lego-deprecated
 
 FROM alpine:${ALPINE_VERSION} as zt-builder
 
-ARG ZT_VERSION=1.8.4
+ARG ZT_VERSION=1.10.6
 
-RUN apk add --no-cache --update clang clang-dev alpine-sdk linux-headers \
+RUN apk add --no-cache --update clang clang-dev alpine-sdk linux-headers cargo openssl-dev \
   && git clone --depth 1 --branch ${ZT_VERSION} https://github.com/zerotier/ZeroTierOne.git /src \
   && cd /src \
   && make -f make-linux.mk zerotier-one
