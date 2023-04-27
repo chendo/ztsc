@@ -7,6 +7,10 @@ set -e
 # set default path
 : "${CADDYFILE_PATH:=/etc/caddy/Caddyfile}"
 
+# set port
+: "${ZEROTIER_PORT:=0}"
+
+
 if [ -n "$ZT_IDENTITY_PUBLIC" ]; then
 	echo "$ZT_IDENTITY_PUBLIC" > /var/lib/zerotier-one/identity.public
 elif [ -n "$ZT_IDENTITY_PUBLIC_PATH" ]; then
@@ -40,7 +44,7 @@ if [ "$ZT_NETWORK_ID" = "8056c2e21c000001" ]; then
 fi
 
 # start zerotier and daemonize
-zerotier-one -d -p0
+zerotier-one -d -p $ZEROTIER_PORT
 
 # let zerotier daemon startup
 sleep 1
