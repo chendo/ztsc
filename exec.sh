@@ -44,7 +44,7 @@ if [ "$ZT_NETWORK_ID" = "8056c2e21c000001" ]; then
 fi
 
 # start zerotier and daemonize
-zerotier-one -d -p $ZEROTIER_PORT
+zerotier-one -d -p$ZEROTIER_PORT
 
 # let zerotier daemon startup
 sleep 1
